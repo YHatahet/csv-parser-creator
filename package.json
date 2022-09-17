@@ -1,0 +1,14 @@
+{
+  "name": "csv-parser-creator",
+  "version": "1.0.0",
+  "description": "Creates parsers for CSV files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "YHatahet",
+  "license": "MIY",
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  }
+}
