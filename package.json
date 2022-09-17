@@ -7,8 +7,25 @@
     "test": "test"
   },
   "author": "YHatahet",
-  "license": "MIY",
+  "license": "MIT",
   "dependencies": {
     "csvtojson": "^2.0.10"
-  }
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YHatahet/csv-parser-creator.git"
+  },
+  "keywords": [
+    "csv",
+    "parser",
+    "decoder"
+  ],
+  "bugs": {
+    "url": "https://github.com/YHatahet/csv-parser-creator/issues"
+  },
+  "homepage": "https://github.com/YHatahet/csv-parser-creator#readme"
 }
