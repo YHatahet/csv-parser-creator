@@ -51,7 +51,7 @@ class CsvParserCreator {
    * @returns
    */
   #readCsvFileAsArray(path) {
-    let data = fs.readFileSync(path, "ascii");
+    let data = fs.readFileSync(path, "ascii").trim(); //remove any extra lines
     data = data.split("\n"); // every line will be an entry in the array
     for (const i in data) data[i] = data[i].split(","); // each entry is split into an array
     return data;
