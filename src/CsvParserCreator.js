@@ -11,15 +11,10 @@ class CsvParserCreator {
   constructor(pathToCsvFile, skipHeader = false) {
     this.pathToCsvFile = pathToCsvFile;
     this.skipHeader = skipHeader;
-    this.csvData = [];
-  }
-  async init() {
     this.csvData = this.#readCsvFileAsArray(this.pathToCsvFile);
-
     this.trie = new Trie();
-    for (const path of this.csvData) {
-      this.trie.add(path);
-    }
+
+    for (const path of this.csvData) this.trie.add(path);
   }
 
   /**
