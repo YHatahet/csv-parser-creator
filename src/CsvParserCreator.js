@@ -4,25 +4,45 @@ const Trie = require("./Trie");
 class CsvParserCreator {
   /**
    *
-   * @param {String} pathToCsvFile
-   * @param {Boolean} skipHeader Choosing this as true will not allow you to pass in a JSON object for parsing. //TODO ignore
+   * @param {String} pathToCsvFile Absolute or relative path to the CSV file
+   * @param {Boolean} headerExists Choosing this as true will allow you to pass in a JSON object
+   *  for parsing if header actually exists, otherwise will omit the first row of the csv table.
    *
    */
-  constructor(pathToCsvFile, skipHeader = false) {
+  constructor(pathToCsvFile, headerExists = false) {
     this.pathToCsvFile = pathToCsvFile;
-    this.skipHeader = skipHeader;
-    this.csvData = this.#readCsvFileAsArray(this.pathToCsvFile);
     this.trie = new Trie();
+    this.headerExists = headerExists;
+    const csvData = this.#readCsvFileAsArray(this.pathToCsvFile);
+    if (headerExists) {
+      this.order = csvData[0]; // take header row
+      this.order.pop(); // remove "expected result" string
+    }
 
-    for (const path of this.csvData) this.trie.add(path);
+    for (let i = headerExists ? 1 : 0; i < csvData.length; i++) {
+      this.trie.add(csvData[i]);
+    }
   }
 
   /**
    *
-   * @param {String[] | Number[]} path
+   * @param {String[]} path array of choices
+   * @return {String}
    */
   getOutput(path) {
     return this.trie.navigate(path)?.answer;
+  }
+
+  /**
+   *
+   * @param {Object} obj object containing all entries of the header and their values
+   * @return {String | undefined}
+   */
+  getOutputJSON(obj) {
+    if (!(this.headerExists === true)) return;
+    const orderedInput = [];
+    for (const entry of this.order) orderedInput.push(obj[entry]);
+    return this.getOutput(orderedInput);
   }
 
   /**
