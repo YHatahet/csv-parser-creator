@@ -17,7 +17,7 @@ class Trie {
    *
    * @param {String[] | Number[]} path
    */
-  add(path) {
+  insert(path) {
     // if not array or incorrect length
     if (!(Array.isArray(path) && path.length > 1)) return;
 
@@ -37,11 +37,11 @@ class Trie {
   }
 
   /**
-   * 
-   * @param {*} path 
-   * @returns 
+   *
+   * @param {String[]} path
+   * @returns {TrieNode}
    */
-  navigate(path) {
+  search(path) {
     // if not array or incorrect length
     if (!(Array.isArray(path) && path.length > 1)) return;
     let currentNode = this.#root;

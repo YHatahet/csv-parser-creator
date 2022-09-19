@@ -20,7 +20,7 @@ class CsvParserCreator {
     }
 
     for (let i = headerExists ? 1 : 0; i < csvData.length; i++) {
-      this.trie.add(csvData[i]);
+      this.trie.insert(csvData[i]);
     }
   }
 
@@ -30,7 +30,7 @@ class CsvParserCreator {
    * @return {String}
    */
   getOutput(path) {
-    return this.trie.navigate(path)?.answer;
+    return this.trie.search(path)?.answer;
   }
 
   /**
