@@ -12,5 +12,6 @@ const CsvParserCreator = require("../src/CsvParserCreator");
 
   console.log(parser.getOutputJSON({ A: "0", B: "0" })); // undefined - missing header
   console.log(parser.getOutputJSON({ A: "0", B: "0", C: "4" })); // undefined - value doesn't exist
-  console.log(parser.getOutput(["1", "4", "1"])); // undefined - no parser exists for that path
+
+  console.log(parser.getPaths());
 })();
