@@ -44,8 +44,9 @@ class Trie {
     if (!(Array.isArray(path) && path.length > 1)) return;
     let currentNode = this.#root;
     for (const item of path) {
-      currentNode = currentNode.children[item];
-      if (currentNode === undefined) return undefined; //TODO appropriate response?
+      // if child has "any", take it
+      currentNode = currentNode.children["*"] || currentNode.children[item];
+      if (currentNode === undefined) return undefined;
     }
     return currentNode;
   }
