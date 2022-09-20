@@ -61,6 +61,17 @@ class CsvParserCreator {
     for (const i in data) data[i] = data[i].split(","); // each entry is split into an array
     return data;
   }
+
+  /**
+   *
+   * @returns {String[][]}
+   */
+  getPaths() {
+    const output = [];
+    if (this.#headerExists) output.push(this.#order.concat(["Ans"]));
+    output.push(...this.#trie.getPaths());
+    return output;
+  }
 }
 
 module.exports = CsvParserCreator;
