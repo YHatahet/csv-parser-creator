@@ -1,7 +1,7 @@
 class TrieNode {
   constructor() {
     this.children = {};
-    this.answer;
+    this.answer = undefined;
   }
 }
 

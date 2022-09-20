@@ -2,6 +2,11 @@ const fs = require("fs");
 const Trie = require("./Trie");
 
 class CsvParserCreator {
+  /**@type {String[]} */ #order = [];
+  /**@type {Boolean} */ #headerExists = false;
+  /**@type {Trie} */ #trie = undefined;
+  /**@type {String} */ #pathToCsvFile = "";
+
   /**
    *
    * @param {String} pathToCsvFile Absolute or relative path to the CSV file
@@ -10,17 +15,17 @@ class CsvParserCreator {
    *
    */
   constructor(pathToCsvFile, headerExists = false) {
-    this.pathToCsvFile = pathToCsvFile;
-    this.trie = new Trie();
-    this.headerExists = headerExists;
-    const csvData = this.#readCsvFileAsArray(this.pathToCsvFile);
+    this.#pathToCsvFile = pathToCsvFile;
+    this.#trie = new Trie();
+    this.#headerExists = headerExists;
+    const csvData = this.#readCsvFileAsArray(this.#pathToCsvFile);
     if (headerExists) {
-      this.order = csvData[0]; // take header row
-      this.order.pop(); // remove "expected result" string
+      this.#order = csvData[0]; // take header row
+      this.#order.pop(); // remove "expected result" string
     }
 
     for (let i = headerExists ? 1 : 0; i < csvData.length; i++) {
-      this.trie.insert(csvData[i]);
+      this.#trie.insert(csvData[i]);
     }
   }
 
@@ -30,7 +35,7 @@ class CsvParserCreator {
    * @return {String}
    */
   getOutput(path) {
-    return this.trie.search(path)?.answer;
+    return this.#trie.search(path)?.answer;
   }
 
   /**
@@ -39,9 +44,9 @@ class CsvParserCreator {
    * @return {String | undefined}
    */
   getOutputJSON(obj) {
-    if (!(this.headerExists === true)) return;
+    if (!(this.#headerExists === true)) return;
     const orderedInput = [];
-    for (const entry of this.order) orderedInput.push(obj[entry]);
+    for (const entry of this.#order) orderedInput.push(obj[entry]);
     return this.getOutput(orderedInput);
   }
 
