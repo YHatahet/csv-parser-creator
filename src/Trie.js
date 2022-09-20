@@ -1,7 +1,7 @@
 class TrieNode {
   constructor() {
     this.children = {};
-    this.answer;
+    this.answer = undefined;
   }
 }
 
@@ -65,6 +65,35 @@ class Trie {
       if (currentNode === undefined) return undefined;
     }
     return currentNode;
+  }
+
+  /**
+   *
+   * @param {TrieNode} node
+   */
+  #getPathsHelper(node, currentPath, output) {
+    if (node.answer !== undefined) {
+      currentPath.push(node.answer);
+      output.push(currentPath);
+      return;
+    }
+    for (const child of Object.keys(node.children)) {
+      this.#getPathsHelper(
+        node.children[child],
+        currentPath.concat([child]),
+        output
+      );
+    }
+  }
+
+  /**
+   * Returns the paths of trie, with the result in the last column
+   * @returns {String[][]}
+   */
+  getPaths() {
+    const output = [];
+    this.#getPathsHelper(this.#root, [], output);
+    return output;
   }
 }
 
