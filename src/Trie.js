@@ -20,18 +20,34 @@ class Trie {
     if (!(Array.isArray(path) && path.length > 1)) return;
 
     let currentNode = this.#root;
-    const output = path.pop();
+    const output = path.pop(); // answer is the final entry in array
 
     for (const item of path) {
-      if (currentNode.children[item] === undefined) {
-        // if no path, create it
-        currentNode.children[item] = new TrieNode(item);
+      const { children } = currentNode;
+      // if one of the children is "*", ignore input
+      if (children["*"]) {
+        currentNode = children["*"];
+        continue;
       }
+
+      // if no path, create it
+      if (children[item] === undefined) children[item] = new TrieNode();
+
+      // Pass children from other parents to the new "any" parent node and delete others
+      if (item === "*") {
+        const childrenKeys = Object.keys(children);
+        for (const childKey of childrenKeys) {
+          if (childKey === "*") continue;
+          Object.assign(children["*"], children[childKey]);
+          delete children[childKey];
+        }
+      }
+
       // move to child node
-      currentNode = currentNode.children[item];
+      currentNode = children[item];
     }
-    currentNode.answer = output;
-    currentNode.isEnd = true;
+    // avoid overwriting answers on next iterations
+    if (currentNode.answer === undefined) currentNode.answer = output;
   }
 
   /**
