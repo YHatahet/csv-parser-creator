@@ -1,9 +1,7 @@
 class TrieNode {
-  constructor(value = undefined, children = {}) {
-    this.value = value;
-    this.children = children;
-    this.isEnd = false;
-    this.answer = undefined;
+  constructor() {
+    this.children = {};
+    this.answer;
   }
 }
 
